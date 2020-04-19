@@ -92,7 +92,7 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("My Contacts ");
 
-        setUndecorated(true);
+        setUndecorated(false);
         //jPanel3 = setShape(new RoundRectangle2D.Double(30,30, 350,200, 50,100));
         jPanel3.setBackground(new java.awt.Color(226, 226, 226));
         jPanel3.setForeground(new java.awt.Color(240, 240, 240));
@@ -168,7 +168,7 @@ public class Main extends javax.swing.JFrame {
         });
         jPanel4.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 80, -1));
 
-        jButton9.setFont(new java.awt.Font("Lucida Grande", 0, 15));   
+        jButton9.setFont(new java.awt.Font("Lucida Grande", 0, 13));   
         jButton9.setText("Refresh");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
