@@ -1,6 +1,8 @@
 class Contact {
     //new contact information variables
     private String lastName, firstName, phoneNumber, emailAddress;
+
+    final public static String[] CONTACT_FIELDS = {"First Name", "Last Name", "Email", "Phone"};
     
     /**********
      *name: getLastName --> GetNotesUser
@@ -63,6 +65,15 @@ class Contact {
         return s.equals(lastName) || s.equals(firstName) || s.equals(phoneNumber) || s.equals(emailAddress);
     }
 
+    public String[] asArray(){
+        String[] contactInfo = new String[4];
+        contactInfo[0] = lastName;
+        contactInfo[1] = firstName;
+        contactInfo[2] = phoneNumber;
+        contactInfo[3] = emailAddress;
+
+        return contactInfo;
+    }
     
 
 
