@@ -11,7 +11,10 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import java.awt.geom.RoundRectangle2D;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.Desktop;
+import java.io.File;
 public class Main extends javax.swing.JFrame {
 
     public Main (){
@@ -27,7 +30,7 @@ public class Main extends javax.swing.JFrame {
     static Contact[] allContactsArray = new Contact[100];
 
     static String[] arraySorting = new String[100];
-
+   
 
     
     private void initComponents() {
@@ -64,14 +67,16 @@ public class Main extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
        
         jButton2 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-
+        jTextField2 = new javax.swing.JComboBox(Contact.CONTACT_FIELDS);
+        
+       
+        
         jPanel5.setBackground(new java.awt.Color(102, 102, 102));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -96,6 +101,8 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("My Contacts ");
 
+        
+       
         setUndecorated(false);
         //jPanel3 = setShape(new RoundRectangle2D.Double(30,30, 350,200, 50,100));
         jPanel3.setBackground(new java.awt.Color(226, 226, 226));
@@ -111,7 +118,10 @@ public class Main extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-
+        
+      
+        
+        
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -213,10 +223,43 @@ public class Main extends javax.swing.JFrame {
         
 
         jButton2.setText("Open CSV");
+        jButton7.setText("Quit");
+        
+        
+       
+     
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                try{
+                File file = new File("allcontactsvf.csv");
+        
+                //first check if Desktop is supported by Platform or not
+                if(!Desktop.isDesktopSupported()){
+                    System.out.println("Desktop is not supported");
+                    return;
+                }
+        
+                Desktop desktop = Desktop.getDesktop();
+        
+                //let's try to open PDF file
+                file = new File("allcontactsvf.csv");
                 jButton2ActionPerformed(evt);
-                System.out.println("open");
+                //System.out.println("file open");
+                
+                
+                if(file.exists()){
+                    desktop.open(file); 
+                }
+                } catch (IOException e){
+                    System.out.println("No default application supported. Install Excel or similar application.");
+                }
+            }
+        });
+        
+         jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.out.println("BYE!");
+                 System.exit(0);
             }
         });
 
@@ -227,6 +270,7 @@ public class Main extends javax.swing.JFrame {
                         .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -237,14 +281,16 @@ public class Main extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jButton2)
-                                        
+                                        .addComponent(jButton7)
                                         ))
         );
 
         jPanel6.setBackground(java.awt.Color.lightGray);
 
         jLabel10.setText("View Contact:");
-
+        
+        
+        
         jButton5.setText("A-Z");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,26 +307,22 @@ public class Main extends javax.swing.JFrame {
 
         jLabel11.setText("Sort by:");
 
-        jTextField2.setText("last name");
-        
+        //jTextField2.setText("last name");
+       
+
         Path path = Paths.get("allcontactsvf.csv");
         grid = new CSVGrid(path);
         grid.setPreferredSize(new Dimension(grid.getPreferredSize().width, 400));
         //System.out.print("path: " + path);
         
         grid.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-        grid.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        grid.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 10));
         grid.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        grid.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
         grid.getVerticalScrollBar().setUnitIncrement(8);
         //jPanel7.add(grid);
         grid.setBackground(Color.WHITE);
-        
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-  jButton8.setIcon(new javax.swing.ImageIcon("Icons/refresh.png")); 
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -297,7 +339,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+               
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -305,7 +347,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(10, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton8)
+                    
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton5)
                         .addComponent(jButton6)
@@ -487,8 +529,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     
-    private javax.swing.JButton jButton8;
+    
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -512,7 +555,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JPopupMenu jPopupMenu3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JComboBox jTextField2;
 
     private CSVGrid grid;
     
@@ -521,7 +564,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        grid.addContact(new Contact("", "", "", ""));
+        grid.addContact(new Contact());
+        JScrollBar vertical = grid.getVerticalScrollBar();
+        vertical.setValue(vertical.getMaximum());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -546,10 +591,7 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
+    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton6ActionPerformed
