@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-
 import java.awt.*;
+
+//this code is from the internet for customizing a scrollbar
+
 public class CustomScrollBarUI extends BasicScrollBarUI {
 
       private final Dimension d = new Dimension();

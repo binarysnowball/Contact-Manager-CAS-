@@ -3,12 +3,14 @@ import java.awt.*;
 import java.util.*;
 
 class HighlightableRowsPanel extends JPanel{
-    private ArrayList<Integer> rows;
+    ArrayList<Integer> rows;
     private int rowHeight;
+    private CSVGrid grid;
 
-    public HighlightableRowsPanel(int rowHeight){
+    public HighlightableRowsPanel(CSVGrid grid, int rowHeight){
         rows = new ArrayList<>();
         this.rowHeight = rowHeight;
+        this.grid = grid;
     }
 
     public void highlightRow(int row){
@@ -25,7 +27,7 @@ class HighlightableRowsPanel extends JPanel{
         super.paintComponent(g);
         g.setColor(new java.awt.Color(0, 51, 153));
         for(int row : rows){
-            g.fillRect(0, row * rowHeight, this.getWidth(), rowHeight);
+            g.fillRect(0, (int) grid.getRowPosition(row), this.getWidth(), rowHeight);
         }
 
     }

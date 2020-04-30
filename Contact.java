@@ -59,7 +59,11 @@ class Contact {
     public boolean contains(String s){
         return s.equals(lastName) || s.equals(firstName) || s.equals(phoneNumber) || s.equals(emailAddress);
     }
-
+    /**********
+     *name: 
+     *description:
+     *input/output:no input, no output (void)
+     ***************************/
     public String[] asArray(){
         return fields;
     }
